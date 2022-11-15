@@ -38,11 +38,10 @@ def findapi(file):
     return strs
 if __name__ == '__main__':
     print("在path处填入java项目路径")
-    path=""
+    path="/Users/mteceh/Downloads/jeecg-boot-3.4.3"
     # path=sys.argv[1]
     for i,j in dealwith(path,".java").items():
         findapi(j)
         f = open(r"./apiout.txt", 'a')
-        f.write()
         f.write(findapi(j))
         f.close()
