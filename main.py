@@ -1,4 +1,5 @@
 import os
+import re
 def pathread(filepath):
     patha= {}
     i=0
@@ -24,33 +25,24 @@ def dealwith(path,ext):
                 filedict[s] = a[i] + '/' + str(work(a[i])[j])
     return filedict
 def findapi(file):
-    with open(file, 'r') as rd_file:
-        fs = open(file, "r")
-        liness = fs.readline()
-        liine = liness[:-1]
-        print(liine)
-        for line in rd_file.readlines():
-
-            if "@RequestMapping("in line:
-                f = open(r"./apiout.txt", 'a')
-                f.write(line)
-                f.close()
-            if "@GetMapping("in line:
-                f = open(r"./apiout.txt", 'a')
-                f.write(line)
-                f.close()
-        rd_file.close()
-    return line
+    f1 = open(file, 'r', encoding='utf-8')
+    text = f1.read()
+    f1.close()
+    regex = r"[ ]*(@RequestMapping|@GetMapping)[(](\s*value\W*|[\"/]*)[^\"]*\"[)}]"
+    matches = re.finditer(regex, text, re.MULTILINE)
+    strs=''
+    for matchNum, match in enumerate(matches, start=1):
+        match = [x.strip('\n') for x in match.group()]
+        strs = ''.join(match)
+        strs=strs+'\n'
+    return strs
 if __name__ == '__main__':
-    print("在代码中给path输入参数")
+    print("在path处填入java项目路径")
     path=""
-    #path=sys.argv[1]
+    # path=sys.argv[1]
     for i,j in dealwith(path,".java").items():
-    #print(i)
-        print()
         findapi(j)
         f = open(r"./apiout.txt", 'a')
+        f.write()
         f.write(findapi(j))
         f.close()
-
-
